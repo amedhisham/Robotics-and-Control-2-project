@@ -78,6 +78,9 @@ end
 %xlim([-10 110])
 %ylim([-10 110])
 
+x_final = circlex(end);
+y_final = circley(end);
+
 fs = length(circlex); 
 t = linspace(0, 10, fs)';
 
