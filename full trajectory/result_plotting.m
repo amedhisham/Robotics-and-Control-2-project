@@ -4,6 +4,10 @@ parameters;
 x_tracking = out.x_tracking.signals.values;
 y_tracking = out.y_tracking.signals.values;
 
+t_x_tracking = out.x_tracking.time;
+t_y_tracking = out.y_tracking.time;
+
+
 t_x = out.x_err_b.time;
 x_data = out.x_err_b.signals.values;
 
@@ -16,106 +20,131 @@ th_data = out.th_err_b.signals.values;
 ro_data = out.ro.signals.values;
 gamma_data = out.gamma.signals.values;
 delta_data = out.delta.signals.values;
+theta_data = out.th_tracking.signals.values;
+
 
 t_ro = out.ro.time;
 t_gamma = out.gamma.time;
 t_delta = out.delta.time;
+t_theta = out.th_tracking.time;
 
 
-plot(x_tracking, y_tracking, 'LineWidth', 2);
-ylabel('y'); xlabel('x');
-str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ...
-    ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
-text(0.95, 0.98, str, 'Units', 'normalized', ...
-    'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
-    'FontSize', 12);
-axis equal;
+% 
+% plot(x_tracking, y_tracking, 'LineWidth', 2);
+% title("Position Regulation")
+% ylabel('y'); xlabel('x');
+% str = {['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+% text(0.95, 0.98, str, 'Units', 'normalized', ...
+%     'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
+%     'FontSize', 12);
+% axis equal;
+ % 
+ % plot(t_th, th_data, 'LineWidth', 2);
+ %            ylabel('theta Angle Error'); xlabel('Time (s)');
+ %            str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
+ %                ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+ %            text(0.95, 0.98, str, 'Units', 'normalized', ...
+ %            'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...            
+ %            'FontSize', 12);
+ % 
 
- plot(t_th, th_data, 'LineWidth', 2);
+% Figure Names
+names = {"x error (B)", "y error (B)", "theta error (B)", "Position tracking", "ro", "gamma", "delta", "theta", "X Position", "Y Postion"};
+
+for i = 1:10
+
+    fig = figure('Name', names{i}, 'NumberTitle', 'off');
+
+    switch i
+        case 1
+            plot(t_x, x_data, 'LineWidth', 2);
+            ylabel('x Position Error'); xlabel('Time (s)');
+            str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
+                ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+            text(0.95, 0.98, str, 'Units', 'normalized', ...
+            'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...            
+            'FontSize', 12);
+        case 2
+            plot(t_y, y_data, 'LineWidth', 2);
+            ylabel('y Position Error'); xlabel('Time (s)');
+            str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
+                ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+            text(0.95, 0.98, str, 'Units', 'normalized', ...
+            'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...            
+            'FontSize', 12);
+        case 3
+            plot(t_th, th_data, 'LineWidth', 2);
             ylabel('theta Angle Error'); xlabel('Time (s)');
             str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
                 ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
             text(0.95, 0.98, str, 'Units', 'normalized', ...
             'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...            
             'FontSize', 12);
+        case 4
+            plot(x_tracking, y_tracking, 'LineWidth', 2);
+            ylabel('y (m)'); xlabel('x (m)');
+            str = {
+                ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+             text(0.95, 0.98, str, 'Units', 'normalized', ...
+            'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...            
+            'FontSize', 12);
+            axis equal;
+        case 5
+            plot(t_ro, ro_data, 'LineWidth', 2);
+            ylabel('ro (rad)'); xlabel('Time (s)');
+            str = {
+                ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+            text(0.95, 0.98, str, 'Units', 'normalized', ...
+                'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
+                'FontSize', 12);
+        case 6
+            plot(t_gamma, gamma_data, 'LineWidth', 2);
+            ylabel('gamma (rad)'); xlabel('Time (s)');
+            str = {
+                ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+            text(0.95, 0.98, str, 'Units', 'normalized', ...
+                'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
+                'FontSize', 12);
+        case 7
+            plot(t_delta, delta_data, 'LineWidth', 2);
+            ylabel('delta (rad)'); xlabel('Time (s)');
+            str = {
+                ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+            text(0.95, 0.98, str, 'Units', 'normalized', ...
+                'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
+                'FontSize', 12);
+        case 8
+            plot(t_theta, theta_data, 'LineWidth', 2);
+            ylabel('theta (rad)'); xlabel('Time (s)');
+            str = {['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+            text(0.95, 0.98, str, 'Units', 'normalized', ...
+                'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
+                'FontSize', 12);
+        case 9
+            plot(t_x_tracking, x_tracking, 'LineWidth', 2);
+            ylabel('x position (rad)'); xlabel('Time (s)');
+            str = {['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+            text(0.95, 0.98, str, 'Units', 'normalized', ...
+                'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
+                'FontSize', 12);
+        case 10
+        plot(t_y_tracking, y_tracking, 'LineWidth', 2);
+        ylabel('y position (rad)'); xlabel('Time (s)');
+        str = {['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
+        text(0.95, 0.98, str, 'Units', 'normalized', ...
+            'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
+            'FontSize', 12);
+    end
 
-% 
-% % Figure Names
-% names = {"x error (B)", "y error (B)", "theta error (B)", "Position tracking", "ro", "gamma", "delta"};
-% 
-% for i = 1:7
-% 
-%     fig = figure('Name', names{i}, 'NumberTitle', 'off');
-% 
-%     switch i
-%         case 1
-%             plot(t_x, x_data, 'LineWidth', 2);
-%             ylabel('x Position Error'); xlabel('Time (s)');
-%             str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
-%                 ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
-%             text(0.95, 0.98, str, 'Units', 'normalized', ...
-%             'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...            
-%             'FontSize', 12);
-%         case 2
-%             plot(t_y, y_data, 'LineWidth', 2);
-%             ylabel('y Position Error'); xlabel('Time (s)');
-%             str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
-%                 ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
-%             text(0.95, 0.98, str, 'Units', 'normalized', ...
-%             'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...            
-%             'FontSize', 12);
-%         case 3
-%             plot(t_th, th_data, 'LineWidth', 2);
-%             ylabel('theta Angle Error'); xlabel('Time (s)');
-%             str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
-%                 ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
-%             text(0.95, 0.98, str, 'Units', 'normalized', ...
-%             'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...            
-%             'FontSize', 12);
-%         case 4
-%             plot(x_tracking, y_tracking, 'LineWidth', 2);
-%             ylabel('y'); xlabel('x');
-%             str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
-%                 ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
-%              text(0.95, 0.98, str, 'Units', 'normalized', ...
-%             'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...            
-%             'FontSize', 12);
-%             axis equal;
-%         case 5
-%             plot(t_ro, ro_data, 'LineWidth', 2);
-%             ylabel('ro'); xlabel('Time (s)');
-%             str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
-%                 ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
-%             text(0.95, 0.98, str, 'Units', 'normalized', ...
-%                 'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
-%                 'FontSize', 12);
-%         case 6
-%             plot(t_gamma, gamma_data, 'LineWidth', 2);
-%             ylabel('gamma'); xlabel('Time (s)');
-%             str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
-%                 ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
-%             text(0.95, 0.98, str, 'Units', 'normalized', ...
-%                 'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
-%                 'FontSize', 12);
-%         case 7
-%             plot(t_delta, delta_data, 'LineWidth', 2);
-%             ylabel('delta'); xlabel('Time (s)');
-%             str = {['a = ', num2str(a)], ['\xi = ',num2str(ksi)], ... 
-%                 ['K1 = ', num2str(k1_reg)], ['K2 = ',num2str(k2_reg)],['K3 = ', num2str(k3_reg)]};
-%             text(0.95, 0.98, str, 'Units', 'normalized', ...
-%                 'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', ...
-%                 'FontSize', 12);
-%     end
-% 
-% 
-%     title(strrep(names{i}, '_', ' '));
-%     grid on;
-% 
-%     % Save to directory
-%     filename = sprintf('%s a%d ksi%.3f.png', char(names{i}), a, ksi);
-%     fullPath = fullfile('/home/federico/matlab/ReC2/combined/Simulations_Results', filename);
-% 
-%     saveas(fig, fullPath);
-%     close(fig)
-% 
-% end
+
+    title(strrep(names{i}, '_', ' '));
+    grid on;
+
+    % Save to directory
+    filename = sprintf('%s _k1_%.2f _k2_%.2f _k3_%.2f.png', char(names{i}), k1_reg, k2_reg,k3_reg);
+    fullPath = fullfile('/media/hisham/New Volume/Masters/RC2/RC2_Group Project/R&C2 - Group Project/full trajectory/SImulation_Results', filename);
+
+    saveas(fig, fullPath);
+    % close(fig)
+
+end
